@@ -26,53 +26,103 @@ claude plugins add lugh lugh
 
 ---
 
+## Workflow
+
+Skills follow the CRISP-DM lifecycle. Run them in order inside a lugh project, or use `/lugh:next` to see where you are.
+
+```
+new-ds-project → spec → data-profile → experiment → model-card → ml-api
+   scaffold        plan    understand     model &      document     deploy
+                           data           iterate
+```
+
+---
+
 ## Available Skills
 
 ### `lugh:new-ds-project`
 
 Scaffold a complete, production-ready data science project from scratch.
 
-**Usage:**
-
 ```
-/new-ds-project <project-name>
+/lugh:new-ds-project <project-name>
 ```
 
-**What it creates:**
+Creates: Python package, Marimo notebooks, DVC pipeline, Hydra config, GitHub Actions CI, Docker, pre-commit, pytest, SQLFluff.
 
-```
-my-project/
-├── src/my_project/          # Python package (main.py, py.typed)
-├── tests/                   # pytest test suite
-├── notebooks/               # Marimo notebook template
-├── conf/                    # Hydra configuration
-├── data/{raw,processed,staging,model_features}/
-├── models/                  # Trained model artifacts (DVC-tracked)
-├── sql/                     # SQL linting config
-├── dvc.yaml                 # DVC pipeline (prepare/featurize/train/evaluate)
-├── params.yaml              # Experiment parameters
-├── pyproject.toml           # Dependencies (uv)
-├── ruff.toml                # Linter & formatter config
-├── Dockerfile               # Multi-stage Docker build
-├── justfile                 # Task runner
-├── .github/workflows/ci.yml # GitHub Actions CI
-├── .pre-commit-config.yaml  # Code quality hooks
-├── .editorconfig            # Editor formatting rules
-├── .env-template            # Environment variables
-└── README.md
-```
-
-**Stack**: Python 3.12, uv, DVC, Hydra, Marimo, Ruff, mypy, pre-commit, pytest, Docker, SQLFluff, GitHub Actions
+**Stack**: Python 3.12, uv, DuckDB, DVC, Hydra, Marimo, Ruff, mypy, pre-commit, pytest, Docker, SQLFluff, GitHub Actions
 
 ---
 
-## Roadmap
+### `lugh:next`
 
-Future skills planned for the `lugh` plugin:
+Show project lifecycle status and recommend what to do next.
 
-- `eda-report` — Generate an EDA report from a CSV/parquet file
-- `dvc-pipeline` — Scaffold a DVC pipeline with stages
-- `model-card` — Generate a model card markdown template
+```
+/lugh:next
+```
+
+Inspects the project directory and prints a status board of completed CRISP-DM phases.
+
+---
+
+### `lugh:spec`
+
+Define scope and success criteria before writing code. *(CRISP-DM: Business Understanding)*
+
+```
+/lugh:spec <spec-name>
+```
+
+Guided conversation → creates `specs/YYYY-MM-DD-<name>/` with `plan.md`, `decisions.md`, `success-metrics.md`.
+
+---
+
+### `lugh:data-profile`
+
+Understand a dataset before modeling. *(CRISP-DM: Data Understanding)*
+
+```
+/lugh:data-profile <source>
+```
+
+Accepts CSV, Parquet, DuckDB table, or SQL connection string. Generates a Marimo EDA notebook and a data dictionary.
+
+---
+
+### `lugh:experiment`
+
+Set up a reproducible ML experiment. *(CRISP-DM: Modeling)*
+
+```
+/lugh:experiment <experiment-name>
+```
+
+Creates a git branch, updates `params.yaml`, and writes a lightweight experiment log. Works with DVC and git — no duplicate code.
+
+---
+
+### `lugh:model-card`
+
+Document a trained model for governance and deployment. *(CRISP-DM: Evaluation)*
+
+```
+/lugh:model-card <model-name>
+```
+
+Guided conversation → `models/<model-name>/model-card.md` following the Google Model Card standard.
+
+---
+
+### `lugh:ml-api`
+
+Serve a trained model as a REST API. *(CRISP-DM: Deployment)*
+
+```
+/lugh:ml-api <model-name>
+```
+
+Scaffolds FastAPI app with `/predict`, `/health`, `/info` endpoints inside the project package + `docker-compose.yml`.
 
 ---
 
