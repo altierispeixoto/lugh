@@ -1,0 +1,16 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "lugh",
+  "description": "Data science productivity plugins for Claude Code — project scaffolding, EDA helpers, and ML workflow tools.",
+  "owner": {
+    "name": "altierispeixoto"
+  },
+  "plugins": [
+    {
+      "name": "lugh",
+      "description": "Data science project scaffolding and workflow skills",
+      "source": "./plugins/lugh",
+      "category": "development"
+    }
+  ]
+}
