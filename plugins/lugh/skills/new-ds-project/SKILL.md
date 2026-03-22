@@ -28,6 +28,7 @@ The skill's base directory is provided at the top of this invocation as "Base di
 ```bash
 cp -r <skill_base_dir>/template/ NAME/
 mv NAME/src/__PACKAGE__ NAME/src/PACKAGE
+find NAME/ -name "_gitignore" | while read f; do mv "$f" "$(dirname $f)/.gitignore"; done
 ```
 
 ### Step 3 — Replace placeholders in all files

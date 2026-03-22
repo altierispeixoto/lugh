@@ -1,0 +1,38 @@
+# Ignore all files in this directory by default
+*
+
+# Keep directories but ignore their contents
+!raw/
+raw/*
+!raw/.gitkeep
+
+!interim/
+interim/*
+!interim/.gitkeep
+
+!processed/
+processed/*
+!processed/.gitkeep
+
+!external/
+external/*
+!external/.gitkeep
+
+!staging/
+staging/*
+!staging/.gitkeep
+
+!model_features/
+model_features/*
+!model_features/.gitkeep
+
+# DVC files
+!*.dvc
+!.dvcignore
+!dvc.yaml
+!dvc.lock
+
+# Documentation
+!README.md
+!DATACARD.md
+!CHANGELOG.md

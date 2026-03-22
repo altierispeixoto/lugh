@@ -1,0 +1,47 @@
+stages:
+  prepare:
+    cmd: python src/__PACKAGE__/data/prepare.py
+    deps:
+      - src/__PACKAGE__/data/prepare.py
+      - data/raw
+    params:
+      - prepare.split
+      - prepare.seed
+    outs:
+      - data/processed
+
+  featurize:
+    cmd: python src/__PACKAGE__/features/featurize.py
+    deps:
+      - src/__PACKAGE__/features/featurize.py
+      - data/processed
+    params:
+      - featurize.max_features
+      - featurize.ngrams
+    outs:
+      - data/model_features
+
+  train:
+    cmd: python src/__PACKAGE__/models/train.py
+    deps:
+      - src/__PACKAGE__/models/train.py
+      - data/model_features
+    params:
+      - train.seed
+      - train.n_estimators
+      - train.max_depth
+      - train.learning_rate
+    outs:
+      - models/model.pkl
+
+  evaluate:
+    cmd: python src/__PACKAGE__/models/evaluate.py
+    deps:
+      - src/__PACKAGE__/models/evaluate.py
+      - models/model.pkl
+      - data/model_features
+    params:
+      - evaluate.threshold
+    metrics:
+      - metrics.json:
+          cache: false

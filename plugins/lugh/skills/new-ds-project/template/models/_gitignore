@@ -1,0 +1,5 @@
+# Ignore model binaries — version with DVC instead
+*
+!.gitignore
+!README.md
+!*.dvc
