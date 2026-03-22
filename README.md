@@ -47,9 +47,11 @@ claude plugins add lugh lugh
 Skills are designed to be used in sequence inside a project created by `lugh:new-ds-project`. Run `/lugh:next` at any point to see your current phase and what to do next.
 
 ```
-  scaffold → spec → arch → data-profile → experiment → model-card → ml-api
+  scaffold → spec → arch → data-profile → data-quality → featurize
                       ↑
               /lugh:adr available at any phase to document decisions
+
+  → experiment → eval → model-card → ml-api → monitor
 ```
 
 | Phase | Skill | Description |
@@ -58,9 +60,13 @@ Skills are designed to be used in sequence inside a project created by `lugh:new
 | Business Understanding | `spec` | Define scope, success metrics, and key decisions |
 | MLOps Architecture | `arch` | Define the infrastructure and tooling stack |
 | Data Understanding | `data-profile` | EDA notebook + data dictionary |
+| Data Preparation | `data-quality` | Validation rules + executable data quality checks |
+| Data Preparation | `featurize` | Feature catalog + populated featurize.py DVC stage |
 | Modeling | `experiment` | Git branch + params update + experiment log |
+| Evaluation | `eval` | Slice analysis, threshold selection, go/no-go report |
 | Evaluation | `model-card` | Document a trained model for governance and handoff |
 | Deployment | `ml-api` | Scaffold a FastAPI serving endpoint |
+| Production | `monitor` | Drift detection, prediction logging, runbook |
 | Utility (any phase) | `adr` | Architecture Decision Record (MADR format) |
 | Navigator | `next` | Show lifecycle status and recommend the next step |
 
@@ -206,6 +212,43 @@ Uses DuckDB as the query engine throughout. Generates:
 
 ---
 
+### `lugh:data-quality` — Data Validation
+
+*CRISP-DM: Data Preparation*
+
+Define data quality rules and generate executable validation before feature engineering.
+
+```bash
+/lugh:data-quality <data-source>
+```
+
+Guided conversation covering required fields, value constraints, null rate thresholds, uniqueness constraints, cross-column rules, and row count expectations. Generates:
+
+- **`docs/data-quality-rules-<source>.md`** — human-readable rules table with rationale
+- **`src/<package>/data/validate.py`** — executable validation using Pandera, Great Expectations, or custom assertions
+- **`conf/validate.yaml`** — Hydra-tracked thresholds (version-controlled alongside code)
+- New `validate` DVC stage inserted between `prepare` and `featurize`
+
+---
+
+### `lugh:featurize` — Feature Engineering
+
+*CRISP-DM: Data Preparation*
+
+Design the feature engineering pipeline and scaffold the featurize DVC stage.
+
+```bash
+/lugh:featurize
+```
+
+Guided conversation covering task type, entity grain, datetime lag/rolling features, categorical encoding strategies, numeric transforms, leakage risks, and serving-time availability. Generates:
+
+- **`docs/feature-catalog.md`** — table of all features with source, transformation, type, leakage flag, and serving availability
+- **`src/<package>/features/featurize.py`** — populated feature engineering module (not a stub)
+- Updated `params.yaml` and `dvc.yaml` featurize stage
+
+---
+
 ### `lugh:experiment` — Experiment Tracking
 
 *CRISP-DM: Modeling*
@@ -220,6 +263,23 @@ Set up a reproducible ML experiment that complements git and DVC — no duplicat
 2. Guides you through parameter changes and updates `params.yaml`
 3. Writes `experiments/<name>.md` — a lightweight log (hypothesis, changed parameters, results, conclusions)
 4. Prints the `dvc repro` command to run
+
+---
+
+### `lugh:eval` — Model Evaluation
+
+*CRISP-DM: Evaluation*
+
+Run structured evaluation beyond overall metrics: threshold selection, slice analysis, and a formal go/no-go recommendation.
+
+```bash
+/lugh:eval <model-name>
+```
+
+Guided conversation covering task type, operating threshold strategy, subgroup slices, fairness requirements, baseline comparison, and cost asymmetry. Automatically reads success criteria from `specs/` to produce a formal verdict. Generates:
+
+- **`notebooks/eval-<model>-<date>.py`** — Marimo notebook with confusion matrix, ROC/PR curves, calibration plot, slice tables, threshold sensitivity analysis
+- **`docs/evaluation-report-<model>.md`** — structured report: overall metrics, subgroup performance, threshold recommendation, go/no-go against spec success criteria
 
 ---
 
@@ -259,10 +319,32 @@ Also writes a `docker-compose.yml` at the project root for local testing.
 
 ---
 
+### `lugh:monitor` — Production Monitoring
+
+*Production: Post-deployment*
+
+Set up drift detection, prediction logging, and incident response for a deployed model.
+
+```bash
+/lugh:monitor <model-name>
+```
+
+Guided conversation covering monitoring tool, reference dataset, high-risk features, cadence, alert thresholds, ground truth availability, prediction log storage, and alert channel. Generates:
+
+- **`src/<package>/api/monitoring.py`** — FastAPI middleware for logging prediction inputs and outputs
+- **`notebooks/monitoring-dashboard.py`** — Marimo dashboard with input drift charts, PSI/KS statistics, performance over time (if ground truth available), and volume metrics
+- **`docs/monitoring-runbook.md`** — alert thresholds, incident response decision tree, retraining trigger criteria, escalation contacts
+- **`conf/monitor.yaml`** — Hydra config for thresholds and reference dataset path
+
+---
+
 ## Requirements
 
 - [Claude Code](https://github.com/anthropics/claude-code) CLI
 - All lifecycle skills require a project created by `lugh:new-ds-project`
+- `data-quality` and `featurize` recommend running `data-profile` first (for column context)
+- `eval` recommends running `experiment` first (to have trained model predictions)
+- `monitor` recommends running `ml-api` first (to have a FastAPI app to instrument)
 
 ---
 
