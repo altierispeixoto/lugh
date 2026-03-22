@@ -41,15 +41,14 @@ claude plugins add lugh lugh
 Skills are designed to be used in sequence inside a project created by `lugh:new-ds-project`. Run `/lugh:next` at any point to see your current phase and what to do next.
 
 ```
-┌─────────────────────────────────────────────────────────────────────────┐
-│                         CRISP-DM Lifecycle                              │
-├──────────────┬──────────┬──────────────┬────────────┬──────────┬────────┤
-│   Scaffold   │   Plan   │  Understand  │   Model    │ Evaluate │ Deploy │
-│              │          │    Data      │            │          │        │
-│ new-ds-      │ :spec    │ :data-       │ :experiment│ :model-  │ :ml-   │
-│ project      │          │  profile     │            │  card    │  api   │
-└──────────────┴──────────┴──────────────┴────────────┴──────────┴────────┘
-                                ↕ /lugh:next (navigate the lifecycle)
+┌──────────────┬──────────┬──────────────┬──────────────┬────────────┬──────────┬────────┐
+│   Scaffold   │   Plan   │ Architecture │  Understand  │   Model    │ Evaluate │ Deploy │
+│              │          │              │    Data      │            │          │        │
+│ new-ds-      │ :spec    │    :arch     │ :data-       │ :experiment│ :model-  │ :ml-   │
+│ project      │          │              │  profile     │            │  card    │  api   │
+└──────────────┴──────────┴──────────────┴──────────────┴────────────┴──────────┴────────┘
+                                     ↕ /lugh:next (navigate the lifecycle)
+                          /lugh:adr — document any decision at any time
 ```
 
 ---
@@ -107,10 +106,11 @@ Project: my-project
 
 ✔ new-ds-project    scaffolded
 ✔ lugh:spec         specs/2026-03-23-customer-churn/ found
-○ lugh:data-profile no EDA notebooks found yet
+○ lugh:arch         docs/mlops-architecture.md not found
 
 ➡ Recommended next step:
-   /lugh:data-profile data/raw/customers.csv
+   /lugh:arch
+   Define your MLOps infrastructure stack before working with data.
 ```
 
 ---
@@ -132,6 +132,51 @@ Guides you through a structured conversation and writes to `specs/YYYY-MM-DD-<na
 | `plan.md` | Problem statement, data sources, scope |
 | `success-metrics.md` | Business and technical success criteria |
 | `decisions.md` | Constraints, trade-offs, open questions |
+
+---
+
+### `lugh:arch` — MLOps Architecture
+
+*Cross-cutting: Infrastructure & Platform*
+
+Define and document the MLOps infrastructure stack for your project.
+
+```bash
+/lugh:arch
+```
+
+Guided conversation across 12 stack layers:
+
+| Layer | Options |
+|-------|---------|
+| Cloud platform | GCP · AWS · Azure · on-premise · cloud-agnostic |
+| Data platform | BigQuery · Snowflake · Redshift · Databricks · DuckDB + object storage |
+| Data versioning | DVC · Delta Lake · LakeFS · Pachyderm · cloud-native |
+| Training infrastructure | Local · cloud VMs · Vertex AI · SageMaker · Azure ML · Kubeflow |
+| Experiment tracking | MLflow · Weights & Biases · Neptune · Comet · Vertex AI Experiments |
+| Model registry | MLflow Registry · Vertex AI · SageMaker · W&B Artifacts · Hugging Face Hub |
+| Feature store | Feast · Vertex AI Feature Store · Tecton · Hopsworks · none |
+| Model serving | FastAPI · BentoML · Triton · Ray Serve · Vertex AI Endpoints · KServe |
+| Pipeline orchestration | Airflow · Prefect · Kubeflow Pipelines · Vertex AI Pipelines · Dagster · ZenML |
+| Monitoring | Evidently · WhyLogs · Arize · Grafana + Prometheus · Vertex AI Model Monitoring |
+| CI/CD | GitHub Actions · GitLab CI · Jenkins · Cloud Build · Azure DevOps |
+| Container registry | GCR · ECR · ACR · Docker Hub · GitHub Container Registry |
+
+Writes `docs/mlops-architecture.md`.
+
+---
+
+### `lugh:adr` — Architecture Decision Record
+
+*Utility: any phase*
+
+Document a specific architecture or technology decision using the [MADR](https://adr.github.io/madr/) standard.
+
+```bash
+/lugh:adr <decision-slug>
+```
+
+Auto-increments ADR number by scanning `docs/adr/`. Guided conversation covering context, decision, alternatives, rationale, and consequences. Writes `docs/adr/NNNN-<slug>.md`.
 
 ---
 
@@ -217,7 +262,7 @@ Also writes a `docker-compose.yml` at the project root for local testing.
 ## Requirements
 
 - [Claude Code](https://github.com/anthropics/claude-code) CLI
-- All workflow skills (`spec`, `data-profile`, `experiment`, `model-card`, `ml-api`) require a project created by `lugh:new-ds-project`
+- All workflow skills (`spec`, `arch`, `adr`, `data-profile`, `experiment`, `model-card`, `ml-api`) require a project created by `lugh:new-ds-project`
 
 ---
 

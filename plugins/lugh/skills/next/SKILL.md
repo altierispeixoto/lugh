@@ -30,6 +30,7 @@ Run these checks via Bash:
 # Phase signals
 test -f pyproject.toml && echo "scaffold:done" || echo "scaffold:missing"
 ls specs/ 2>/dev/null | grep -q . && echo "spec:done" || echo "spec:missing"
+test -f docs/mlops-architecture.md && echo "arch:done" || echo "arch:missing"
 ls notebooks/eda-*.py 2>/dev/null | grep -q . && echo "data-profile:done" || echo "data-profile:missing"
 ls experiments/ 2>/dev/null | grep -q . && echo "experiment:done" || echo "experiment:missing"
 find models/ -name "model-card.md" 2>/dev/null | grep -q . && echo "model-card:done" || echo "model-card:missing"
@@ -43,9 +44,12 @@ Print the status board using ✔ for done and ○ for missing. Then identify the
 Phase order and skill mapping:
 1. scaffold → `new-ds-project` (always done if we got this far)
 2. spec → `/lugh:spec <project-goal>`
-3. data-profile → `/lugh:data-profile <data-source>`
-4. experiment → `/lugh:experiment <experiment-name>`
-5. model-card → `/lugh:model-card <model-name>`
-6. ml-api → `/lugh:ml-api <model-name>`
+3. arch → `/lugh:arch` (define the MLOps infrastructure stack)
+4. data-profile → `/lugh:data-profile <data-source>`
+5. experiment → `/lugh:experiment <experiment-name>`
+6. model-card → `/lugh:model-card <model-name>`
+7. ml-api → `/lugh:ml-api <model-name>`
+
+Note: `/lugh:adr` is a utility skill for documenting individual decisions — it can be run at any time and is not part of the sequential lifecycle.
 
 If all phases are complete, print: "All phases complete. Run /lugh:next anytime to review status."
