@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="assets/logo.png" alt="Lugh — Celtic master of all crafts" width="200"/>
+  <img src="assets/lugh.jpg" alt="Lugh — Celtic master of all crafts" width="200"/>
 
   # Lugh
 
@@ -42,21 +42,27 @@ Scaffold a complete, production-ready data science project from scratch.
 
 ```
 my-project/
-├── src/my_project/          # Python package
+├── src/my_project/          # Python package (main.py, py.typed)
 ├── tests/                   # pytest test suite
-├── notebooks/               # Jupyter notebook template
+├── notebooks/               # Marimo notebook template
+├── conf/                    # Hydra configuration
 ├── data/{raw,processed,staging,model_features}/
+├── models/                  # Trained model artifacts (DVC-tracked)
 ├── sql/                     # SQL linting config
+├── dvc.yaml                 # DVC pipeline (prepare/featurize/train/evaluate)
+├── params.yaml              # Experiment parameters
 ├── pyproject.toml           # Dependencies (uv)
 ├── ruff.toml                # Linter & formatter config
 ├── Dockerfile               # Multi-stage Docker build
 ├── justfile                 # Task runner
+├── .github/workflows/ci.yml # GitHub Actions CI
 ├── .pre-commit-config.yaml  # Code quality hooks
+├── .editorconfig            # Editor formatting rules
 ├── .env-template            # Environment variables
 └── README.md
 ```
 
-**Stack**: Python 3.12, uv, DVC, Hydra, Ruff, pre-commit, pytest, Docker, SQLFluff
+**Stack**: Python 3.12, uv, DVC, Hydra, Marimo, Ruff, mypy, pre-commit, pytest, Docker, SQLFluff, GitHub Actions
 
 ---
 
