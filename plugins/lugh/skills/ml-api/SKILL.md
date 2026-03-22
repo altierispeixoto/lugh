@@ -198,4 +198,7 @@ Or with Docker:
   docker compose up
 
 API docs available at: http://localhost:8000/docs
+
+Next step → /lugh:monitor <model-name>
+  Set up drift detection and production monitoring for the deployed model.
 ```

@@ -99,6 +99,6 @@ Write `docs/data-dictionary-SLUG.md` as a markdown table pre-populated from `SCH
 Run the notebook:
   uv run marimo edit notebooks/eda-SLUG.py
 
-Next step → /lugh:experiment <experiment-name>
-  Design and track your first modeling experiment.
+Next step → /lugh:data-quality <data-source>
+  Define validation rules and generate executable data quality checks.
 ```

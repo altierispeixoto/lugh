@@ -23,12 +23,16 @@ README.md                           # Public-facing documentation
 All skills (except `new-ds-project`) require a project created by `new-ds-project` and must be run from its root. The sequential order is:
 
 1. `new-ds-project` — scaffold
-2. `spec` — business understanding
+2. `spec` — problem framing
 3. `arch` — MLOps infrastructure
 4. `data-profile` — EDA + data dictionary
-5. `experiment` — git branch + params + log
-6. `model-card` — model documentation
-7. `ml-api` — FastAPI serving scaffold
+5. `data-quality` — validation rules + executable checks
+6. `featurize` — feature catalog + featurize.py DVC stage
+7. `experiment` — git branch + params + log
+8. `eval` — slice analysis, threshold selection, go/no-go report
+9. `model-card` — model governance documentation
+10. `ml-api` — FastAPI serving scaffold
+11. `monitor` — drift detection + prediction logging + runbook
 
 `next` is a navigator (any phase). `adr` is a utility skill (any phase, not sequential).
 

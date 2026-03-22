@@ -89,6 +89,6 @@ Create `SPEC_DIR/` and write three files:
 ```
 ✔ Spec created: SPEC_DIR/
 
-Next step → /lugh:data-profile <data-source>
-  Profile your data to understand schema, distributions, and quality.
+Next step → /lugh:arch
+  Define your MLOps infrastructure stack before working with data.
 ```

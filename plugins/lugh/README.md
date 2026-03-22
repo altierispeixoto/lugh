@@ -25,8 +25,8 @@ Not sure where you are? Run `/lugh:next` from inside any lugh project.
 | [`arch`](skills/arch/SKILL.md) | MLOps Architecture | Define the infrastructure stack across 12 layers (cloud, serving, orchestration, monitoring, etc.) |
 | [`adr`](skills/adr/SKILL.md) | Any | Document an architecture decision using the MADR standard |
 | [`data-profile`](skills/data-profile/SKILL.md) | Data Understanding | EDA notebook + data dictionary from CSV, Parquet, DuckDB, or SQL |
-| [`data-quality`](skills/data-quality/SKILL.md) | Data Preparation | Define validation rules and generate executable data quality checks |
-| [`featurize`](skills/featurize/SKILL.md) | Data Preparation | Design feature engineering pipeline + populate featurize.py DVC stage |
+| [`data-quality`](skills/data-quality/SKILL.md) | Data Validation | Define validation rules and generate executable data quality checks |
+| [`featurize`](skills/featurize/SKILL.md) | Feature Engineering | Design feature engineering pipeline + populate featurize.py DVC stage |
 | [`experiment`](skills/experiment/SKILL.md) | Modeling | Create git branch, update params, log experiment hypothesis |
 | [`eval`](skills/eval/SKILL.md) | Evaluation | Structured evaluation: slice analysis, threshold selection, go/no-go report |
 | [`model-card`](skills/model-card/SKILL.md) | Evaluation | Document a trained model following Google Model Card standard |
