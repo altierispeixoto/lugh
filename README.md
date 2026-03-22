@@ -8,7 +8,8 @@
   <p>
     <a href="https://github.com/altierispeixoto/lugh/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License"></a>
     <a href="https://github.com/anthropics/claude-code"><img src="https://img.shields.io/badge/Claude%20Code-plugin-blueviolet" alt="Claude Code"></a>
-    <a href="https://github.com/altierispeixoto/lugh"><img src="https://img.shields.io/badge/CRISP--DM-lifecycle-orange" alt="CRISP-DM"></a>
+    <a href="https://en.wikipedia.org/wiki/Cross-industry_standard_process_for_data_mining"><img src="https://img.shields.io/badge/CRISP--DM-lifecycle-orange" alt="CRISP-DM"></a>
+    <a href="https://github.com/altierispeixoto/lugh"><img src="https://img.shields.io/badge/MLOps-architecture-green" alt="MLOps"></a>
   </p>
 
   <p><em>Named after Lugh, the Celtic god of craftsmanship — master of all skills and arts.</em></p>
@@ -18,9 +19,14 @@
 
 ## Overview
 
-Lugh is a [Claude Code](https://github.com/anthropics/claude-code) plugin that provides a suite of AI-assisted skills covering the complete data science project lifecycle — from initial scaffolding through production deployment.
+Lugh is a [Claude Code](https://github.com/anthropics/claude-code) plugin that provides AI-assisted skills covering the complete data science and ML engineering lifecycle — from initial scaffolding through production deployment.
 
-Each skill maps to a phase of the [CRISP-DM](https://en.wikipedia.org/wiki/Cross-industry_standard_process_for_data_mining) methodology and integrates with the modern Python DS/ML stack: `uv`, `DuckDB`, `DVC`, `Hydra`, `Marimo`, `FastAPI`, and `Docker`.
+Skills are organized across two layers:
+
+- **CRISP-DM lifecycle** — structured phases from business understanding through deployment
+- **MLOps Engineering** — infrastructure, architecture decisions, and operational tooling
+
+The stack integrates `uv`, `DuckDB`, `DVC`, `Hydra`, `Marimo`, `FastAPI`, and `Docker`.
 
 ---
 
@@ -41,15 +47,22 @@ claude plugins add lugh lugh
 Skills are designed to be used in sequence inside a project created by `lugh:new-ds-project`. Run `/lugh:next` at any point to see your current phase and what to do next.
 
 ```
-┌──────────────┬──────────┬──────────────┬──────────────┬────────────┬──────────┬────────┐
-│   Scaffold   │   Plan   │ Architecture │  Understand  │   Model    │ Evaluate │ Deploy │
-│              │          │              │    Data      │            │          │        │
-│ new-ds-      │ :spec    │    :arch     │ :data-       │ :experiment│ :model-  │ :ml-   │
-│ project      │          │              │  profile     │            │  card    │  api   │
-└──────────────┴──────────┴──────────────┴──────────────┴────────────┴──────────┴────────┘
-                                     ↕ /lugh:next (navigate the lifecycle)
-                          /lugh:adr — document any decision at any time
+  scaffold → spec → arch → data-profile → experiment → model-card → ml-api
+                      ↑
+              /lugh:adr available at any phase to document decisions
 ```
+
+| Phase | Skill | Description |
+|-------|-------|-------------|
+| Setup | `new-ds-project` | Scaffold a production-ready DS project |
+| Business Understanding | `spec` | Define scope, success metrics, and key decisions |
+| MLOps Architecture | `arch` | Define the infrastructure and tooling stack |
+| Data Understanding | `data-profile` | EDA notebook + data dictionary |
+| Modeling | `experiment` | Git branch + params update + experiment log |
+| Evaluation | `model-card` | Document a trained model for governance and handoff |
+| Deployment | `ml-api` | Scaffold a FastAPI serving endpoint |
+| Utility (any phase) | `adr` | Architecture Decision Record (MADR format) |
+| Navigator | `next` | Show lifecycle status and recommend the next step |
 
 ---
 
@@ -75,6 +88,7 @@ my-project/
 ├── models/                   # DVC-tracked model artifacts
 ├── experiments/              # Experiment logs
 ├── specs/                    # Project specs (created by lugh:spec)
+├── docs/                     # Architecture docs and ADRs (created by lugh:arch / lugh:adr)
 ├── sql/                      # SQLFluff configuration
 ├── dvc.yaml                  # Pipeline: prepare → featurize → train → evaluate
 ├── params.yaml               # Experiment parameters
@@ -99,7 +113,7 @@ See where you are in the project lifecycle and get a concrete recommendation.
 /lugh:next
 ```
 
-Inspects the project for phase completion signals (specs, EDA notebooks, experiment logs, model cards, API scaffolding) and prints a status board:
+Inspects the project for phase completion signals and prints a status board:
 
 ```
 Project: my-project
@@ -107,6 +121,7 @@ Project: my-project
 ✔ new-ds-project    scaffolded
 ✔ lugh:spec         specs/2026-03-23-customer-churn/ found
 ○ lugh:arch         docs/mlops-architecture.md not found
+○ lugh:data-profile no EDA notebooks found yet
 
 ➡ Recommended next step:
    /lugh:arch
@@ -137,7 +152,7 @@ Guides you through a structured conversation and writes to `specs/YYYY-MM-DD-<na
 
 ### `lugh:arch` — MLOps Architecture
 
-*Cross-cutting: Infrastructure & Platform*
+*MLOps Engineering: Infrastructure & Platform*
 
 Define and document the MLOps infrastructure stack for your project.
 
@@ -145,24 +160,9 @@ Define and document the MLOps infrastructure stack for your project.
 /lugh:arch
 ```
 
-Guided conversation across 12 stack layers:
+Guided conversation across 12 stack layers — cloud platform, data warehouse, data versioning, training infrastructure, experiment tracking, model registry, feature store, model serving, pipeline orchestration, monitoring, CI/CD, and container registry.
 
-| Layer | Options |
-|-------|---------|
-| Cloud platform | GCP · AWS · Azure · on-premise · cloud-agnostic |
-| Data platform | BigQuery · Snowflake · Redshift · Databricks · DuckDB + object storage |
-| Data versioning | DVC · Delta Lake · LakeFS · Pachyderm · cloud-native |
-| Training infrastructure | Local · cloud VMs · Vertex AI · SageMaker · Azure ML · Kubeflow |
-| Experiment tracking | MLflow · Weights & Biases · Neptune · Comet · Vertex AI Experiments |
-| Model registry | MLflow Registry · Vertex AI · SageMaker · W&B Artifacts · Hugging Face Hub |
-| Feature store | Feast · Vertex AI Feature Store · Tecton · Hopsworks · none |
-| Model serving | FastAPI · BentoML · Triton · Ray Serve · Vertex AI Endpoints · KServe |
-| Pipeline orchestration | Airflow · Prefect · Kubeflow Pipelines · Vertex AI Pipelines · Dagster · ZenML |
-| Monitoring | Evidently · WhyLogs · Arize · Grafana + Prometheus · Vertex AI Model Monitoring |
-| CI/CD | GitHub Actions · GitLab CI · Jenkins · Cloud Build · Azure DevOps |
-| Container registry | GCR · ECR · ACR · Docker Hub · GitHub Container Registry |
-
-Writes `docs/mlops-architecture.md`.
+Writes `docs/mlops-architecture.md` with every layer documented and a pointer to ADRs for individual decisions.
 
 ---
 
@@ -170,13 +170,13 @@ Writes `docs/mlops-architecture.md`.
 
 *Utility: any phase*
 
-Document a specific architecture or technology decision using the [MADR](https://adr.github.io/madr/) standard.
+Document a specific architecture or technology choice using the [MADR](https://adr.github.io/madr/) standard.
 
 ```bash
 /lugh:adr <decision-slug>
 ```
 
-Auto-increments ADR number by scanning `docs/adr/`. Guided conversation covering context, decision, alternatives, rationale, and consequences. Writes `docs/adr/NNNN-<slug>.md`.
+Auto-increments ADR number by scanning `docs/adr/`. Guided conversation covering context, decision, alternatives considered, rationale, and consequences (positive and trade-offs). Writes `docs/adr/NNNN-<slug>.md`.
 
 ---
 
@@ -262,7 +262,7 @@ Also writes a `docker-compose.yml` at the project root for local testing.
 ## Requirements
 
 - [Claude Code](https://github.com/anthropics/claude-code) CLI
-- All workflow skills (`spec`, `arch`, `adr`, `data-profile`, `experiment`, `model-card`, `ml-api`) require a project created by `lugh:new-ds-project`
+- All lifecycle skills require a project created by `lugh:new-ds-project`
 
 ---
 
