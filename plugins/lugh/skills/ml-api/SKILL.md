@@ -1,6 +1,6 @@
 ---
 name: ml-api
-description: Use when the user wants to serve a trained model as a REST API. Scaffolds a FastAPI application with predict, health, and info endpoints inside the project's source package. Must be run from inside a project created by lugh:new-ds-project. Covers CRISP-DM Deployment phase.
+description: Use when the user wants to serve a trained model as a REST API. Scaffolds a FastAPI application with predict, health, and info endpoints inside the project's source package. Must be run from inside a project created by lugh:new-ds-project. Covers the Model Serving phase of the ML lifecycle.
 argument-hint: <model-name>
 allowed-tools: [Bash, Write]
 ---

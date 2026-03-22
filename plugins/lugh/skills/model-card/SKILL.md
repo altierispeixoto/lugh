@@ -1,6 +1,6 @@
 ---
 name: model-card
-description: Use when the user has a trained model and wants to document it for governance, team handoff, or deployment. Creates a model card following the Google Model Card standard. Must be run from inside a project created by lugh:new-ds-project. Covers CRISP-DM Evaluation phase.
+description: Use when the user has a trained model and wants to document it for governance, team handoff, or deployment. Creates a model card following the Google Model Card standard. Must be run from inside a project created by lugh:new-ds-project. Covers the Model Governance phase of the ML lifecycle.
 argument-hint: <model-name>
 allowed-tools: [Bash, Write]
 ---

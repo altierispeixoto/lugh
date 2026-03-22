@@ -1,7 +1,7 @@
 # lugh plugin
 
 Data science project scaffolding and workflow skills for Claude Code.
-Skills follow the CRISP-DM lifecycle — from project setup through deployment.
+Skills cover the full ML engineering lifecycle — from problem framing through production monitoring.
 
 ## Workflow
 

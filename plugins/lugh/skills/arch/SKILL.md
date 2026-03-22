@@ -1,6 +1,6 @@
 ---
 name: arch
-description: Use when the user wants to define, document, or review the MLOps infrastructure stack for an ML project. Guides through 12 stack layers (cloud, data, training, serving, orchestration, monitoring, CI/CD, etc.) and writes a structured architecture document. Works standalone or inside a lugh project. Covers the MLOps Engineering layer that underpins the CRISP-DM lifecycle.
+description: Use when the user wants to define, document, or review the MLOps infrastructure stack for an ML project. Guides through 12 stack layers (cloud, data, training, serving, orchestration, monitoring, CI/CD, etc.) and writes a structured architecture document. Works standalone or inside a lugh project. Covers the MLOps Infrastructure layer of the ML lifecycle.
 argument-hint: (optional: project context or notes)
 allowed-tools: [Bash, Write, AskUserQuestion]
 ---

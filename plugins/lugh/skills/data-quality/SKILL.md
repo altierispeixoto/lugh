@@ -1,6 +1,6 @@
 ---
 name: data-quality
-description: Use when the user wants to validate data quality, define data contracts, catch schema drift, or document data quality rules before feature engineering or model training. Generates executable validation code and a rules document. Must be run from inside a project created by lugh:new-ds-project. Covers CRISP-DM Data Preparation phase.
+description: Use when the user wants to validate data quality, define data contracts, catch schema drift, or document data quality rules before feature engineering or model training. Generates executable validation code and a rules document. Must be run from inside a project created by lugh:new-ds-project. Covers the Data Validation phase of the ML lifecycle.
 argument-hint: <data-source>
 allowed-tools: [Bash, Write, AskUserQuestion]
 ---

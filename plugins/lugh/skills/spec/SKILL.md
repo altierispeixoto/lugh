@@ -1,6 +1,6 @@
 ---
 name: spec
-description: Use when the user wants to define scope, success criteria, or structure a plan before starting ML work. Creates a timestamped spec directory with plan, decisions, and success metrics. Must be run from inside a project created by lugh:new-ds-project. Inspired by CRISP-DM Business Understanding phase and Agent OS /shape-spec.
+description: Use when the user wants to define scope, success criteria, or structure a plan before starting ML work. Creates a timestamped spec directory with plan, decisions, and success metrics. Must be run from inside a project created by lugh:new-ds-project. Covers the Problem Framing phase of the ML lifecycle.
 argument-hint: <spec-name>
 allowed-tools: [Bash, Write]
 ---
@@ -90,5 +90,5 @@ Create `SPEC_DIR/` and write three files:
 ✔ Spec created: SPEC_DIR/
 
 Next step → /lugh:data-profile <data-source>
-  Profile your data to complete CRISP-DM Data Understanding.
+  Profile your data to understand schema, distributions, and quality.
 ```

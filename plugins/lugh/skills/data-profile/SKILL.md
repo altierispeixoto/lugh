@@ -1,6 +1,6 @@
 ---
 name: data-profile
-description: Use when the user wants to understand a dataset before modeling. Generates a Marimo EDA notebook and a data dictionary from any data source (CSV, Parquet, DuckDB, or SQL database). Must be run from inside a project created by lugh:new-ds-project. Covers CRISP-DM Data Understanding phase.
+description: Use when the user wants to understand a dataset before modeling. Generates a Marimo EDA notebook and a data dictionary from any data source (CSV, Parquet, DuckDB, or SQL database). Must be run from inside a project created by lugh:new-ds-project. Covers the Data Understanding phase of the ML lifecycle.
 argument-hint: <source>
 allowed-tools: [Bash, Write]
 ---

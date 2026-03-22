@@ -1,6 +1,6 @@
 ---
 name: featurize
-description: Use when the user wants to design, document, or scaffold the feature engineering pipeline. Creates a feature catalog, generates the featurize.py DVC stage with feature definitions, and documents feature lineage. Must be run from inside a project created by lugh:new-ds-project. Covers CRISP-DM Data Preparation phase.
+description: Use when the user wants to design, document, or scaffold the feature engineering pipeline. Creates a feature catalog, generates the featurize.py DVC stage with feature definitions, and documents feature lineage. Must be run from inside a project created by lugh:new-ds-project. Covers the Feature Engineering phase of the ML lifecycle.
 argument-hint: (optional: data source or model name)
 allowed-tools: [Bash, Write, AskUserQuestion]
 ---

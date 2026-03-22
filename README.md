@@ -8,7 +8,7 @@
   <p>
     <a href="https://github.com/altierispeixoto/lugh/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License"></a>
     <a href="https://github.com/anthropics/claude-code"><img src="https://img.shields.io/badge/Claude%20Code-plugin-blueviolet" alt="Claude Code"></a>
-    <a href="https://en.wikipedia.org/wiki/Cross-industry_standard_process_for_data_mining"><img src="https://img.shields.io/badge/CRISP--DM-lifecycle-orange" alt="CRISP-DM"></a>
+    <a href="https://github.com/altierispeixoto/lugh"><img src="https://img.shields.io/badge/ML%20Engineering-lifecycle-orange" alt="ML Engineering"></a>
     <a href="https://github.com/altierispeixoto/lugh"><img src="https://img.shields.io/badge/MLOps-architecture-green" alt="MLOps"></a>
   </p>
 
@@ -21,10 +21,7 @@
 
 Lugh is a [Claude Code](https://github.com/anthropics/claude-code) plugin that provides AI-assisted skills covering the complete data science and ML engineering lifecycle — from initial scaffolding through production deployment.
 
-Skills are organized across two layers:
-
-- **CRISP-DM lifecycle** — structured phases from business understanding through deployment
-- **MLOps Engineering** — infrastructure, architecture decisions, and operational tooling
+Skills follow a modern ML engineering lifecycle that covers the full arc from problem framing through production monitoring — including feedback loops, data validation, and MLOps infrastructure. The lifecycle is informed by current industry practice rather than any single methodology.
 
 The stack integrates `uv`, `DuckDB`, `DVC`, `Hydra`, `Marimo`, `FastAPI`, and `Docker`.
 
@@ -56,17 +53,17 @@ Skills are designed to be used in sequence inside a project created by `lugh:new
 
 | Phase | Skill | Description |
 |-------|-------|-------------|
-| Setup | `new-ds-project` | Scaffold a production-ready DS project |
-| Business Understanding | `spec` | Define scope, success metrics, and key decisions |
-| MLOps Architecture | `arch` | Define the infrastructure and tooling stack |
+| Setup | `new-ds-project` | Scaffold a production-ready ML project |
+| Problem Framing | `spec` | Define scope, success metrics, and key decisions |
+| MLOps Infrastructure | `arch` | Define the infrastructure and tooling stack |
 | Data Understanding | `data-profile` | EDA notebook + data dictionary |
-| Data Preparation | `data-quality` | Validation rules + executable data quality checks |
-| Data Preparation | `featurize` | Feature catalog + populated featurize.py DVC stage |
-| Modeling | `experiment` | Git branch + params update + experiment log |
-| Evaluation | `eval` | Slice analysis, threshold selection, go/no-go report |
-| Evaluation | `model-card` | Document a trained model for governance and handoff |
-| Deployment | `ml-api` | Scaffold a FastAPI serving endpoint |
-| Production | `monitor` | Drift detection, prediction logging, runbook |
+| Data Validation | `data-quality` | Validation rules + executable data quality checks |
+| Feature Engineering | `featurize` | Feature catalog + populated featurize.py DVC stage |
+| Model Development | `experiment` | Git branch + params update + experiment log |
+| Model Evaluation | `eval` | Slice analysis, threshold selection, go/no-go report |
+| Model Governance | `model-card` | Document a trained model for governance and handoff |
+| Model Serving | `ml-api` | Scaffold a FastAPI serving endpoint |
+| Production Monitoring | `monitor` | Drift detection, prediction logging, runbook |
 | Utility (any phase) | `adr` | Architecture Decision Record (MADR format) |
 | Navigator | `next` | Show lifecycle status and recommend the next step |
 
@@ -138,7 +135,7 @@ Project: my-project
 
 ### `lugh:spec` — Project Specification
 
-*CRISP-DM: Business Understanding*
+*Phase: Problem Framing*
 
 Define the problem, success criteria, and key decisions before touching data.
 
@@ -158,7 +155,7 @@ Guides you through a structured conversation and writes to `specs/YYYY-MM-DD-<na
 
 ### `lugh:arch` — MLOps Architecture
 
-*MLOps Engineering: Infrastructure & Platform*
+*Phase: MLOps Infrastructure*
 
 Define and document the MLOps infrastructure stack for your project.
 
@@ -188,7 +185,7 @@ Auto-increments ADR number by scanning `docs/adr/`. Guided conversation covering
 
 ### `lugh:data-profile` — Data Understanding
 
-*CRISP-DM: Data Understanding*
+*Phase: Data Understanding*
 
 Explore any data source and generate EDA and documentation in one pass.
 
@@ -214,7 +211,7 @@ Uses DuckDB as the query engine throughout. Generates:
 
 ### `lugh:data-quality` — Data Validation
 
-*CRISP-DM: Data Preparation*
+*Phase: Data Preparation*
 
 Define data quality rules and generate executable validation before feature engineering.
 
@@ -233,7 +230,7 @@ Guided conversation covering required fields, value constraints, null rate thres
 
 ### `lugh:featurize` — Feature Engineering
 
-*CRISP-DM: Data Preparation*
+*Phase: Data Preparation*
 
 Design the feature engineering pipeline and scaffold the featurize DVC stage.
 
@@ -251,7 +248,7 @@ Guided conversation covering task type, entity grain, datetime lag/rolling featu
 
 ### `lugh:experiment` — Experiment Tracking
 
-*CRISP-DM: Modeling*
+*Phase: Model Development*
 
 Set up a reproducible ML experiment that complements git and DVC — no duplicate code.
 
@@ -268,7 +265,7 @@ Set up a reproducible ML experiment that complements git and DVC — no duplicat
 
 ### `lugh:eval` — Model Evaluation
 
-*CRISP-DM: Evaluation*
+*Phase: Model Evaluation*
 
 Run structured evaluation beyond overall metrics: threshold selection, slice analysis, and a formal go/no-go recommendation.
 
@@ -285,7 +282,7 @@ Guided conversation covering task type, operating threshold strategy, subgroup s
 
 ### `lugh:model-card` — Model Documentation
 
-*CRISP-DM: Evaluation*
+*Phase: Model Governance*
 
 Document a trained model for governance, team handoff, and deployment readiness.
 
@@ -299,7 +296,7 @@ Follows the [Google Model Card](https://modelcards.withgoogle.com/about) standar
 
 ### `lugh:ml-api` — Model Serving
 
-*CRISP-DM: Deployment*
+*Phase: Model Serving*
 
 Scaffold a production-ready REST API for model serving.
 
@@ -321,7 +318,7 @@ Also writes a `docker-compose.yml` at the project root for local testing.
 
 ### `lugh:monitor` — Production Monitoring
 
-*Production: Post-deployment*
+*Phase: Production Monitoring*
 
 Set up drift detection, prediction logging, and incident response for a deployed model.
 

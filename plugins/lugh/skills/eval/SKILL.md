@@ -1,6 +1,6 @@
 ---
 name: eval
-description: Use when the user wants to run a structured evaluation of a trained model — beyond just overall metrics. Guides through threshold selection, slice analysis, baseline comparison, and generates an evaluation notebook and go/no-go report. Must be run from inside a project created by lugh:new-ds-project. Covers CRISP-DM Evaluation phase.
+description: Use when the user wants to run a structured evaluation of a trained model — beyond just overall metrics. Guides through threshold selection, slice analysis, baseline comparison, and generates an evaluation notebook and go/no-go report. Must be run from inside a project created by lugh:new-ds-project. Covers the Model Evaluation phase of the ML lifecycle.
 argument-hint: <model-name>
 allowed-tools: [Bash, Write, AskUserQuestion]
 ---

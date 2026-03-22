@@ -1,6 +1,6 @@
 ---
 name: experiment
-description: Use when the user wants to run a new ML experiment in a reproducible way. Creates a git branch, updates params.yaml with new parameter values, and creates a lightweight experiment log. Complements git and DVC — does not duplicate code that is already version-controlled. Must be run from inside a project created by lugh:new-ds-project. Covers CRISP-DM Modeling phase.
+description: Use when the user wants to run a new ML experiment in a reproducible way. Creates a git branch, updates params.yaml with new parameter values, and creates a lightweight experiment log. Complements git and DVC — does not duplicate code that is already version-controlled. Must be run from inside a project created by lugh:new-ds-project. Covers the Model Development phase of the ML lifecycle.
 argument-hint: <experiment-name>
 allowed-tools: [Bash, Write]
 ---
