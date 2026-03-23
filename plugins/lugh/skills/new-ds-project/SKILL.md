@@ -2,7 +2,7 @@
 name: new-ds-project
 description: Use when the user wants to create a new data science project, scaffold a DS project, start a new ML project, or set up a data science repository from scratch. Creates the full directory structure and all standard files including pyproject.toml, Dockerfile, ruff config, pre-commit hooks, DVC pipeline, Hydra config, Marimo notebooks, GitHub Actions CI, and pytest setup.
 argument-hint: <project-name>
-allowed-tools: [Bash, Write]
+allowed-tools: [Bash, Write, AskUserQuestion]
 ---
 
 # New Data Science Project
@@ -40,10 +40,46 @@ find NAME/ -type f | xargs sed -i \
   -e 's/__TITLE__/TITLE/g'
 ```
 
-### Step 4 — Print summary
+### Step 4 — Initialize git, install dependencies, and set up pre-commit
+
+Run the following commands in order:
+
+```bash
+cd NAME && git init && git add . && git commit -m "chore: initial project scaffold"
+```
+
+```bash
+cd NAME && uv venv && uv sync
+```
+
+```bash
+cd NAME && pre-commit install
+```
+
+If any command fails, report the error and stop.
+
+### Step 5 — Ask about DVC
+
+Use AskUserQuestion to ask:
+
+> Would you like to initialize DVC for data versioning? (runs `dvc init`)
+
+If yes:
+
+```bash
+cd NAME && dvc init
+```
+
+### Step 6 — Print summary
+
+Print a summary reflecting what was completed. Adjust the DVC line based on the user's answer in Step 5.
 
 ```
 ✓ Created project: NAME
+✓ Git repository initialized with initial commit
+✓ Virtual environment created and dependencies installed
+✓ Pre-commit hooks installed
+✓ DVC initialized          ← omit if user declined
 
 Directory structure:
   NAME/
@@ -56,11 +92,7 @@ Directory structure:
   ├── sql/
   └── .github/workflows/  GitHub Actions CI
 
-Next steps:
+To start working:
   cd NAME
-  git init && git add . && git commit -m "chore: initial project scaffold"
-  uv venv && source .venv/bin/activate
-  uv sync
-  pre-commit install
-  dvc init        # enable data versioning
+  source .venv/bin/activate
 ```
